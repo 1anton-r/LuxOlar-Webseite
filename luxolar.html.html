@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>LuxOlar — Innovative Solar-Jalousien</title>
+<meta name="description" content="LuxOlar entwickelt moderne, smarte Solar-Jalousien. Nachhaltig, stylisch, effizient." />
+
+<style>
+:root{
+  --sky-blue:#0B5C79;
+  --sun-yellow:#F6B800;
+  --bg:#f7fbff;
+  --text-color:#0f1720;
+  --muted:#6b7b85;
+  --card-bg:#ffffff;
+  --radius:14px;
+  font-family:Inter,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0f1720;
+  --text-color:#f7fbff;
+  --muted:#cbd5e1;
+  --card-bg:#1e293b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text-color);line-height:1.6;transition: all 0.3s ease;}
+header{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 24px;box-shadow:0 4px 14px rgba(11,92,121,0.08);z-index:1000;
+  background:white;transition:0.3s;
+}
+[data-theme="dark"] header{background:#1e293b;}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--sky-blue);}
+.brand img{width:48px;height:48px;}
+.brand h1{font-size:1.4rem;margin:0;}
+.menu-toggle{display:block;cursor:pointer;font-size:1.5rem;transition: transform 0.3s;}
+nav{display:flex;flex-direction:column;position:absolute;top:60px;right:24px;background:var(--card-bg);padding:16px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.1);opacity:0;pointer-events:none;transform:translateY(-20px);transition: all 0.3s ease;}
+nav.active{opacity:1;pointer-events:auto;transform:translateY(0);}
+
+/* Menu links */
+nav a{color:var(--muted); font-weight:600; text-decoration:none; padding:8px 12px; border-radius:8px; transition:.3s;margin-bottom:6px;}
+nav a:hover{background:rgba(11,92,121,0.08); color:var(--sky-blue); transform:scale(1.05);}
+
+/* Dark & Scroll Buttons */
+.dark-btn{position:fixed; bottom:20px; right:20px; background:var(--sun-yellow); color:#0f1720; border:none; padding:10px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem; z-index:1001; transition: transform 0.3s;}
+.dark-btn:hover{transform:scale(1.1);}
+#scrollTopBtn{position:fixed; bottom:80px; right:20px; background:var(--sky-blue); color:white; border:none; padding:12px 16px; border-radius:50%; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2); display:none; font-size:1.2rem; z-index:999; transition: transform 0.3s;}
+#scrollTopBtn:hover{transform:scale(1.1);}
+
+/* Sections */
+.sections{display:flex;flex-direction:column;width:100vw;overflow-x:hidden;}
+section{width:100%; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:clamp(40px,8vw,80px) clamp(20px,5vw,60px); opacity:0; transform: translateY(50px); transition: all 1s ease-out;}
+section.show{opacity:1;transform: translateY(0);}
+h1,h2{background: linear-gradient(90deg, #0B5C79, #F6B800); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 5s ease infinite alternate;}
+@keyframes gradientShift{0%{background-position:0%;}50%{background-position:100%;}100%{background-position:0%;}}
+
+/* Hero */
+.hero h1{font-size:clamp(2rem,8vw,4rem);margin-bottom:24px;font-weight:900;text-transform:uppercase;text-align:center;}
+.hero p{max-width:700px;text-align:center;color:var(--muted);margin-bottom:30px;line-height:1.8;font-size:clamp(1rem,2vw,1.3rem);}
+.btn{background:var(--sky-blue);color:white;padding:14px 24px;border-radius:14px;text-decoration:none;font-weight:700;font-size:1.1rem;transition:.3s;}
+.btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.15);}
+
+/* Produkte */
+.product{background:var(--card-bg);padding:60px 40px;}
+.product-content{display:flex;gap:40px;align-items:flex-start;max-width:1200px;flex-wrap:wrap;justify-content:center;}
+.product-card{background:var(--card-bg);padding:20px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.08); flex:1;min-width:250px;cursor:pointer;transition:.5s;text-align:center;}
+.product-card:hover{transform:translateY(-5px) scale(1.03); box-shadow:0 15px 40px rgba(0,0,0,0.15);}
+.product-card img{width:100%; border-radius:12px; margin-bottom:12px;object-fit:cover;}
+.price{font-weight:700; color: var(--sky-blue);}
+.product-detail{margin-top:30px; max-width:800px;}
+.product-detail li{margin-bottom:8px;line-height:1.5;}
+
+/* Rechner */
+.calculator{background:linear-gradient(180deg, rgba(246,184,0,0.05) 0%, rgba(246,184,0,0.1) 100%);padding:60px 40px;text-align:center;}
+.calculator h2{font-size:clamp(1.8rem,5vw,2.2rem);margin-bottom:12px;}
+.calculator p{max-width:700px;margin:0 auto 20px auto;color:var(--muted);line-height:1.6;font-size:clamp(1rem,2vw,1.1rem);}
+.calculator-wrapper{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:flex-start;}
+.calculator .card{background:var(--card-bg);padding:30px;border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.1);max-width:500px;margin:0 auto;width:100%;transition: transform 0.5s ease, box-shadow 0.5s ease;}
+.calculator .card:hover{transform: translateY(-5px) scale(1.02);box-shadow:0 25px 50px rgba(0,0,0,0.15);}
+.calculator input{padding:14px;border:1.5px solid #dbe4ea;border-radius:12px;font-size:1rem;width:100%;margin-bottom:12px;transition: all 0.3s ease;}
+.calculator input:focus{border:1.5px solid var(--sky-blue);box-shadow: 0 0 8px rgba(11,92,121,0.2);outline:none;}
+.calculator button{background: linear-gradient(90deg, var(--sky-blue), var(--sun-yellow));color:white;padding:14px;border:none;border-radius:12px;font-weight:700;cursor:pointer;transition:.3s ease;width:100%;font-size:1.1rem;}
+.calculator button:hover{transform: translateY(-2px) scale(1.02);box-shadow:0 8px 20px rgba(0,0,0,0.15);}
+.calculator p.result{margin-top:18px;font-weight:700;font-size:1.2rem;color:var(--sky-blue);text-shadow:0 2px 4px rgba(0,0,0,0.1);}
+
+/* Infobox unter Rechner */
+.info-box {
+  margin-top:15px;
+  padding:12px;
+  background:rgba(11,92,121,0.05);
+  border-left:4px solid var(--sky-blue);
+  border-radius:10px;
+  font-size:0.95rem;
+  color:var(--text-color);
+  opacity:0;
+  transform:translateY(20px);
+  transition: all 0.8s ease;
+  max-width:100%;
+  box-sizing:border-box;
+  word-wrap:break-word;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+@media (max-width: 600px) {
+  .info-box { font-size:0.9rem; padding:10px; }
+}
+
+/* Kontakt */
+.contact{background:rgba(246,184,0,0.08);}
+.contact h2{margin-bottom:14px;}
+.contact-card{background:var(--card-bg);padding:28px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.08);max-width:500px;width:100%;}
+form{display:flex;flex-direction:column;gap:14px;margin-top:14px;}
+input,textarea{padding:12px;border:1.5px solid #dbe4ea;border-radius:10px;font-size:1rem;}
+button{background:var(--sun-yellow);color:white;padding:12px;border:none;border-radius:10px;font-weight:700;cursor:pointer;transition:.2s;}
+button:hover{background:#d99f00;}
+.contact p a{color:var(--sky-blue); text-decoration:none;}
+.contact p a:hover{text-decoration:underline;}
+</style>
+</head>
+<body data-theme="light">
+
+<header>
+<a href="#" class="brand"><img src="logo.png" alt="LuxOlar Logo" loading="lazy"><h1>LuxOlar</h1></a>
+<span class="menu-toggle" onclick="toggleMenu()">☰</span>
+<nav id="menuNav">
+<a href="#hero" onclick="closeMenu()">Start</a>
+<a href="#produkt" onclick="closeMenu()">Produkt</a>
+<a href="#rechner" onclick="closeMenu()">Rechner</a>
+<a href="#nachhaltigkeit" onclick="closeMenu()">Nachhaltigkeit</a>
+<a href="#ueberuns" onclick="closeMenu()">Über uns</a>
+<a href="#laws" onclick="closeMenu()">Verordnungen & Rechte</a>
+<a href="#kontakt" onclick="closeMenu()">Kontakt</a>
+</nav>
+</header>
+
+<button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
+<button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
+<div class="sections">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+<h1>LUXOLAR</h1>
+<p>Wir entwickeln smarte Solar-Jalousien, die Energie erzeugen und Licht steuern. Nachhaltig, effizient und stylisch. Komfort für dein Zuhause – intelligent gestaltet.</p>
+<a class="btn" href="#produkt">Mehr erfahren →</a>
+</section>
+
+<!-- PRODUKT -->
+<section class="product" id="produkt">
+<h2>Unsere Produkte</h2>
+<div class="product-content">
+<div class="product-card" onclick="showDetail('custom')">
+<img src="custom.webp" alt="Anpassbare Solar-Jalousie" loading="lazy">
+<h3>Anpassbare Solar-Jalousie</h3>
+<p>Individuelle Größenanpassung, Preis abhängig von der Fläche.</p>
+<p class="price">Preis: ab 350 €</p>
+</div>
+<div class="product-card" onclick="showDetail('standard')">
+<img src="standard.webp" alt="Standard Solar-Jalousie" loading="lazy">
+<h3>Standardgrößen für Privatleute</h3>
+<p>Gängige Fenstergrößen, einfach zu bestellen.</p>
+<p class="price">Preis: 900 €</p>
+</div>
+<div class="product-card" onclick="showDetail('business')">
+<img src="business.webp" alt="Unternehmens-Solar-Jalousie" loading="lazy">
+<h3>Unternehmenslösungen</h3>
+<p>Extra große Jalousien für Firmen, Preis abhängig von der Fläche.</p>
+<p class="price">Preis: ab 2000 €</p>
+</div>
+</div>
+<div class="product-detail" id="productDetail" style="display:none;">
+<h3 id="detailTitle"></h3>
+<p id="detailDesc"></p>
+<ul id="detailAdvantages"></ul>
+<p id="detailPrice"></p>
+</div>
+</section>
+
+<!-- RECHNER -->
+<section class="calculator" id="rechner">
+<h2>Solar-Jalousien Energie-Rechner</h2>
+<p>Berechne, wie viel Strom deine Solar-Jalousien erzeugen können.</p>
+<div class="calculator-wrapper">
+<div class="card">
+<form id="solarForm">
+<input type="number" id="area" placeholder="Fläche der Jalousien (m²)" required step="0.01" min="0">
+<input type="number" id="sunHours" placeholder="Sonnenstunden pro Tag" required step="0.01" min="0">
+<input type="number" id="efficiency" placeholder="Effizienz der Solarzellen (%)" value="41" required step="0.01" min="1" max="100">
+<input type="number" id="price" placeholder="Preis der Jalousien (€)" required step="0.01" min="0">
+<input type="number" id="electricityPrice" placeholder="Strompreis pro kWh (€)" value="0.30" required step="0.01" min="0">
+<button type="submit">Berechnen</button>
+</form>
+<p id="result" class="result"></p>
+<div class="info-box">
+💡 Hinweis: Der durchschnittliche Strompreis liegt aktuell bei ca. 0,30 €/kWh. Die Effizienz unserer Solarzellen beträgt 41 %.
+</div>
+</div>
+</div>
+</section>
+
+<!-- NACHHALTIGKEIT -->
+<section class="sustainability" id="nachhaltigkeit">
+<h2>Nachhaltigkeit & Umweltschutz</h2>
+<p>Unsere Solar-Jalousien tragen erheblich zur Energieeinsparung bei, reduzieren den CO₂-Ausstoß und werden aus recycelbaren Materialien gefertigt. Durch effiziente Solartechnik senken sie den Stromverbrauch und fördern ein grünes, nachhaltiges Zuhause.</p>
+</section>
+
+<!-- ÜBER UNS -->
+<section class="founders" id="ueberuns">
+<h2>Über uns</h2>
+<p>LuxOlar ist ein junges, innovatives Unternehmen, das smarte Solar-Jalousien entwickelt. Unser Team kombiniert Expertise in Technik, Design und Nachhaltigkeit, um die Lebensqualität in Häusern zu verbessern. Wir streben danach, ökologische Verantwortung und modernes Wohndesign zu vereinen und so zukunftsweisende Lösungen für unsere Kunden zu schaffen.</p>
+</section>
+
+<!-- VERORDNUNGEN & RECHTE -->
+<section class="laws" id="laws">
+<h2>Verordnungen, Rechte & Gesetze</h2>
+<p>Unsere Solar-Jalousien entsprechen allen relevanten deutschen und europäischen Vorschriften:</p>
+<ul>
+<li>Energieeinsparverordnung (EnEV / GEG)</li>
+<li>Produktverantwortung nach ElektroG</li>
+<li>VDE-Normen für elektrische Sicherheit</li>
+<li>RoHS-Konformität (Beschränkung gefährlicher Stoffe)</li>
+<li>REACH-Verordnung für chemische Sicherheit</li>
+<li>CE-Kennzeichnung für PV-Systemkomponenten</li>
+<li>Regelungen zur Barrierefreiheit nach DIN 18040</li>
+<li>Verbraucherschutz nach BGB, inkl. Gewährleistung & Widerrufsrecht</li>
+</ul>
+<p>Unsere Produkte sind geprüft, umweltfreundlich und rechtlich abgesichert.</p>
+</section>
+
+<!-- KONTAKT -->
+<section class="contact" id="kontakt">
+<div class="contact-card">
+<h2>Kontakt</h2>
+<form action="mailto:luxolar.info@gmail.com" method="post" enctype="text/plain">
+<input type="text" name="name" placeholder="Dein Name" required>
+<input type="email" name="email" placeholder="Deine E-Mail" required>
+<textarea name="message" rows="5" placeholder="Deine Nachricht..." required></textarea>
+<button type="submit">Nachricht senden</button>
+</form>
+<p>📧 E-Mail: luxolar.info@gmail.com</p>
+<p>📸 Instagram: <a href="https://www.instagram.com/solar_jalousien/" target="_blank">@solar_jalousien</a></p>
+</div>
+</section>
+
+</div>
+
+<script>
+// Scroll Animation
+const sections=document.querySelectorAll('section');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');}});},{threshold:0.2});
+sections.forEach(section=>observer.observe(section));
+
+// Dark Mode
+function toggleDarkMode(){document.body.dataset.theme=document.body.dataset.theme==='dark'?'light':'dark';}
+
+// ScrollTop
+const scrollBtn=document.getElementById("scrollTopBtn");
+window.onscroll=()=>{scrollBtn.style.display=(window.scrollY>300)?"block":"none";}
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
+
+// Menu Toggle
+function toggleMenu(){document.getElementById('menuNav').classList.toggle('active');}
+function closeMenu(){document.getElementById('menuNav').classList.remove('active');}
+
+// Produktdetails
+function showDetail(type){
+const detail=document.getElementById('productDetail');
+const title=document.getElementById('detailTitle');
+const desc=document.getElementById('detailDesc');
+const advantages=document.getElementById('detailAdvantages');
+advantages.innerHTML='';
+detail.style.display='block';
+detail.scrollIntoView({behavior:'smooth',block:'start'});
+if(type==='custom'){title.textContent='Anpassbare Solar-Jalousie';desc.textContent='Passe die Jalousien individuell an deine Fenstergröße an.';['Energieerzeugung','Smart-Home Integration','Nachhaltig produziert','Automatische Lichtsteuerung','Einfache Installation'].forEach(a=>{const li=document.createElement('li');li.textContent=a;advantages.appendChild(li);});}
+else if(type==='standard'){title.textContent='Standardgrößen für Privatleute';desc.textContent='Häufige Fenstergrößen, schnell lieferbar.';['Energieerzeugung','Smart-Home Integration','Nachhaltig produziert','Kostengünstig'].forEach(a=>{const li=document.createElement('li');li.textContent=a;advantages.appendChild(li);});}
+else if(type==='business'){title.textContent='Unternehmenslösungen';desc.textContent='Extra große Jalousien für Firmen.';['Energieerzeugung','Für Firmen','Nachhaltig produziert','Automatische Lichtsteuerung','Einsparungen bei Stromkosten'].forEach(a=>{const li=document.createElement('li');li.textContent=a;advantages.appendChild(li);});}
+}
+
+// Solar Rechner
+const form=document.getElementById('solarForm');
+form.addEventListener('submit',function(e){
+e.preventDefault();
+const area=parseFloat(document.getElementById('area').value.replace(',', '.'));
+const sunHours=parseFloat(document.getElementById('sunHours').value.replace(',', '.'));
+const efficiency=parseFloat(document.getElementById('efficiency').value.replace(',', '.'))/100;
+const price=parseFloat(document.getElementById('price').value.replace(',', '.'));
+const electricityPrice=parseFloat(document.getElementById('electricityPrice').value.replace(',', '.'));
+const solarConstant=0.9;
+const energyPerDay=area*solarConstant*sunHours*efficiency;
+const savingsPerDay=energyPerDay*electricityPrice;
+const savingsPerYear=savingsPerDay*365;
+const paybackYears=price/savingsPerYear;
+let resultText=`Deine Solar-Jalousien könnten ca. ${energyPerDay.toFixed(2)} kWh pro Tag erzeugen.`;
+if(savingsPerYear>0){resultText+=` Das entspricht einer jährlichen Ersparnis von ca. ${savingsPerYear.toFixed(2)} €.<br>Amortisationszeit: ca. ${paybackYears.toFixed(1)} Jahre.`;}
+document.getElementById('result').innerHTML=resultText;
+});
+
+// Infobox Animation
+const infoBox = document.querySelector('.info-box');
+const infoObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, {threshold: 0.2});
+infoObserver.observe(infoBox);
+</script>
+
+</body>
+</html>
+
